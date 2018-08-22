@@ -1,0 +1,34 @@
+[
+  {    
+    "expenseId": 1038,
+    "expenseName": "T shirt",
+    "expenseAmount": 700,
+    "expenseDate": "\/Date(1528049700000)\/",
+    "expenseDescription": "long sleeved",
+    "expenseCatname": "Clothes"
+  },
+  {
+    "expenseId": 1039,
+    "expenseName": "January",
+    "expenseAmount": 5000,
+    "expenseDate": "\/Date(1528049700000)\/",
+    "expenseDescription": "rent for month january",
+    "expenseCatname": "Rent"
+  },
+  {
+    "expenseId": 2034,
+    "expenseName": "Lunch",
+    "expenseAmount": 300,
+    "expenseDate": "\/Date(1525112100000)\/",
+    "expenseDescription": "khana",
+    "expenseCatname": "Food"
+  },
+  {
+    "expenseId": 2035,
+    "expenseName": "Pant",
+    "expenseAmount": 1000,
+    "expenseDate": "\/Date(1523988900000)\/",
+    "expenseDescription": "cotton",
+    "expenseCatname": "Clothes"
+  }
+]
