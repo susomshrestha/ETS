@@ -15,17 +15,24 @@ public partial class DashBoard_Expenses : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-
-            userid = (int)Session["UserId"];
-            showDDL();
-            txtDate.Text = DateTime.Today.ToShortDateString();
-            if (ble.GetAllExpense(userid) != null)
+            if (Session["UserId"] != null)
             {
-                showExpense();
+                userid = (int)Session["UserId"];
+                showDDL();
+                txtDate.Text = DateTime.Today.ToShortDateString();
+                pnlAddPopup.Visible = false;
+                if (ble.GetAllExpense(userid) != null)
+                {
+                    showExpense();
+                }
+                else
+                {
+                    lblEmpty.Visible = true;
+                }
             }
             else
             {
-
+                Response.Redirect("../LoginSignup/Login.aspx");
             }
         }
 
@@ -34,7 +41,7 @@ public partial class DashBoard_Expenses : System.Web.UI.Page
     {
         userid = (int)Session["UserId"];
         DataTable dt = blc.GetAllExpenseCategory(userid);
-        ddlCateogory.DataSource = dt;       
+        ddlCateogory.DataSource = dt;
         ddlCateogory.DataTextField = "ExpenseCatname";
         ddlCateogory.DataValueField = "ExpenseCatid";
         ddlCateogory.DataBind();
@@ -45,6 +52,23 @@ public partial class DashBoard_Expenses : System.Web.UI.Page
     {
         userid = (int)Session["UserId"];
         DataTable dt = ble.GetAllExpense(userid);
+        if (dt.Rows.Count>1)
+        {
+            sortRow.Visible = true;
+        }
+        else
+        {
+            sortRow.Visible = false;
+        }
+        GridView1.DataSource = dt;
+        GridView1.DataBind();
+        lblEmpty.Visible = false;
+        UpdateGridView.Update();
+    }
+    public void showSortedExpense(string sort)
+    {
+        userid = (int)Session["UserId"];
+        DataTable dt = ble.getAllSortedExpense(userid, sort);
         GridView1.DataSource = dt;
         GridView1.DataBind();
         UpdateGridView.Update();
@@ -82,7 +106,7 @@ public partial class DashBoard_Expenses : System.Web.UI.Page
     {
         GridViewRow gvRow = (GridViewRow)((ImageButton)sender).NamingContainer;
         Int32 expenseId = Convert.ToInt32(GridView1.DataKeys[gvRow.RowIndex].Value);
-        
+
 
         DataTable dtbl = ble.GetExpenseByExpenseId(expenseId);
         showPopupCategory();
@@ -92,9 +116,10 @@ public partial class DashBoard_Expenses : System.Web.UI.Page
         txteditAmount.Text = dtbl.Rows[0]["expenseAmount"].ToString();
         txteditDate.Text = Convert.ToDateTime(dtbl.Rows[0]["expenseDate"]).ToShortDateString();
         txteditDescription.Text = dtbl.Rows[0]["expenseDescription"].ToString();
-        
+
         EditPopup.Show();
-        
+        pnlAddPopup.Visible = true;
+
     }
     public void showPopupCategory()
     {
@@ -105,7 +130,7 @@ public partial class DashBoard_Expenses : System.Web.UI.Page
         ddleditCategory.DataValueField = "expenseCatid";
         ddleditCategory.DataBind();
     }
-    
+
     protected void btnSave_Click(object sender, EventArgs e)
     {
         DateTime d = Convert.ToDateTime(txteditDate.Text);
@@ -126,11 +151,34 @@ public partial class DashBoard_Expenses : System.Web.UI.Page
         GridViewRow gvRow = (GridViewRow)((ImageButton)sender).NamingContainer;
         Int32 expenseId = Convert.ToInt32(GridView1.DataKeys[gvRow.RowIndex].Value);
         int i = ble.DeleteExpense(expenseId);
-        if (i>0)
+        if (i > 0)
         {
             ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Expense Deleted');", true);
             showExpense();
         }
     }
 
+
+    protected void ddlColumns_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int col = Convert.ToInt32(ddlColumns.SelectedValue);
+        if (GridView1.Columns[col].Visible == false)
+        {
+            GridView1.Columns[col].Visible = true;
+            ddlColumns.SelectedIndex = 0;
+        }
+        else
+        {
+            GridView1.Columns[col].Visible = false;
+            ddlColumns.SelectedIndex = 0;
+        }
+    }
+   
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlSort.SelectedIndex != 0)
+        {
+            showSortedExpense(ddlSort.SelectedItem.ToString());
+        }
+    }
 }

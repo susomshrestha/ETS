@@ -88,12 +88,13 @@
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" ForeColor="Red" runat="server" ErrorMessage="*" ControlToValidate="txtConfirmPassword" ValidationGroup="a"></asp:RequiredFieldValidator>
                                 <asp:TextBox ID="txtConfirmPassword" TextMode="Password" runat="server" CssClass="input-material"></asp:TextBox>
                                 <label for="login-username" class="label-material">Re-Password</label>
+                                <asp:CompareValidator ValidationGroup="a" ForeColor="Red" ID="CompareValidator1" runat="server" ErrorMessage="Password mismatch" ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword"></asp:CompareValidator>
                             </div>
                         </div>
                         <div style="height: 15px;"></div>
                         <div class="row">
                             <div class="col-md-3 offset-md-9">
-                                <asp:Button ID="btnCreateAccount" OnClientClick="return ValidateRegForm();" OnClick="btnSignup_Click" ValidationGroup="a" runat="server" CssClass="btn btn-primary" Text="Register" />
+                                <asp:Button ID="btnCreateAccount"  OnClick="btnSignup_Click" ValidationGroup="a" runat="server" CssClass="btn btn-primary" Text="Register" />
                             </div>
                         </div>
                     </div>

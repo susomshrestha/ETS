@@ -87,7 +87,7 @@
             </div>
 
             <%-- For edit popup --%>
-            <div class="panel1 panel1-primary" id="pnlAddPopup" style="background-color: white;">
+            <div class="panel1 panel1-primary" id="pnlAddPopup" style="background-color: white;" runat="server">
                 <div class="panel1-heading" id="popupheader">
                     <h3 class="panel1-title">Panel title</h3>
                     <span style="float: right; margin-top: -30px;">

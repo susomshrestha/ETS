@@ -14,7 +14,16 @@ public partial class DashBoard_ExpensesCategory : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            pnlAddPopup.Visible = false;
+            if (Session["UserId"] != null)
+            {
             loadCategories();
+
+            }
+            else
+            {
+                Response.Redirect("../LoginSignup/Login.aspx");
+            }
         }
     }
 
@@ -96,7 +105,7 @@ public partial class DashBoard_ExpensesCategory : System.Web.UI.Page
 
         hfUserID.Value = dt.Rows[0]["expenseCatId"].ToString();
         txteditCategory.Text = dt.Rows[0]["expenseCatName"].ToString();
-
+        pnlAddPopup.Visible = true;
         EditPopup.Show();
     }
 }

@@ -9,13 +9,21 @@ using System.Web.UI.WebControls;
 public partial class DashBoard_IncomesCategory : System.Web.UI.Page
 {
     BLLCategory blc = new BLLCategory();
-    int userid=0;
+    int userid = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            loadCategories();
-            }        
+            pnlAddPopup.Visible = false;
+            if (Session["UserId"] != null)
+            {
+                loadCategories();
+            }
+            else
+            {
+                Response.Redirect("../LoginSignup/Login.aspx");
+            }
+        }
     }
     public void loadCategories()
     {
@@ -30,7 +38,7 @@ public partial class DashBoard_IncomesCategory : System.Web.UI.Page
     {
         userid = (int)Session["UserId"];
         DataTable dt = blc.SearchbyIncomeCatName(txtCategory.Text, userid);
-        if (dt.Rows.Count>0)
+        if (dt.Rows.Count > 0)
         {
             ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Category already exists.');", true);
             txtCategory.Text = string.Empty;
@@ -44,7 +52,7 @@ public partial class DashBoard_IncomesCategory : System.Web.UI.Page
                 loadCategories();
                 txtCategory.Text = string.Empty;
             }
-        }        
+        }
     }
 
     protected void gridIncomeCategories_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -96,7 +104,7 @@ public partial class DashBoard_IncomesCategory : System.Web.UI.Page
 
         hfUserID.Value = dt.Rows[0]["incomeCatId"].ToString();
         txteditCategory.Text = dt.Rows[0]["incomeCatName"].ToString();
-
+        pnlAddPopup.Visible = true;
         EditPopup.Show();
     }
 }

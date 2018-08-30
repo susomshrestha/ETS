@@ -3,13 +3,20 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style>
+        .search1 {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }        
+    </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="UpdateGridView" UpdateMode="Conditional" runat="server">
         <ContentTemplate>
             <div>
                 <p style="margin: 10px 15px;">
-                    <a href="Dashboard.aspx">Dashboard </a> / Expense / Add Expenses
+                    <a href="Dashboard.aspx">Dashboard </a>/ Expense / Add Expenses
                 </p>
             </div>
             <div class="col-lg-12">
@@ -59,8 +66,14 @@
                                         <asp:Label runat="server" CssClass="form-control-label" Text="Date"></asp:Label>
                                     </div>
                                     <div class="col-3">
-                                        <asp:TextBox runat="server" onkeypress="return onlyDate(event)" MaxLength="10" CssClass="form-control" ID="txtDate"></asp:TextBox>
-                                        <ajaxToolkit:CalendarExtender ID="txtDate_CalendarExtender" runat="server" TargetControlID="txtDate" />
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <asp:TextBox runat="server" onkeypress="return onlyDate(event)" MaxLength="10" CssClass="form-control" ID="txtDate"></asp:TextBox>
+                                                <ajaxToolkit:CalendarExtender ID="txtDate_CalendarExtender" runat="server" TargetControlID="txtDate" />
+                                                <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -86,15 +99,37 @@
             <%-- GridView  --%>
             <div class="col-lg-12">
                 <div class="block">
-                    <%--<asp:DropDownList ID="ddlColumns" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlColumns_SelectedIndexChanged">
-                        <asp:ListItem>Show/Hide Columns</asp:ListItem>
-                        <asp:ListItem>Category</asp:ListItem>
-                    </asp:DropDownList>--%>
+                    <div class="row search1" id="sortRow" runat="server">
+                        <div style="margin-right: 10px;">
+                            <asp:DropDownList ID="ddlSort" CssClass="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                                <asp:ListItem Value="0">Sort By</asp:ListItem>
+                                <asp:ListItem Value="1">Category</asp:ListItem>
+                                <asp:ListItem Value="2">Name</asp:ListItem>
+                                <asp:ListItem Value="3">Amount ASC</asp:ListItem>
+                                <asp:ListItem Value="4">Amount DESC</asp:ListItem>
+                                <asp:ListItem Value="5">Date</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div>
+                            <asp:DropDownList ID="ddlColumns" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlColumns_SelectedIndexChanged">
+                                <asp:ListItem Value="0">Show/Hide Columns</asp:ListItem>
+                                <asp:ListItem Value="1">SN</asp:ListItem>
+                                <asp:ListItem Value="2">Category</asp:ListItem>
+                                <asp:ListItem Value="3">Name</asp:ListItem>
+                                <asp:ListItem Value="4">Amount</asp:ListItem>
+                                <asp:ListItem Value="5">Date Added</asp:ListItem>
+                                <asp:ListItem Value="6">Description</asp:ListItem>
+                                <asp:ListItem Value="7">Edit</asp:ListItem>
+                                <asp:ListItem Value="8">Delete</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+                    <asp:Label ID="lblEmpty" runat="server" Text="No Data Found"></asp:Label>
                     <asp:GridView ID="GridView1" BorderWidth="0"
                         CssClass="table table-hover table-responsive-md table-fixed"
                         runat="server" AutoGenerateColumns="False" AllowPaging="True"
                         OnPageIndexChanging="GridView1_PageIndexChanging"
-                        DataKeyNames="expenseId">
+                        DataKeyNames="expenseId" EmptyDataText="No Data Found">
                         <Columns>
                             <asp:TemplateField Visible="false">
                                 <ItemTemplate>
@@ -147,7 +182,6 @@
                     </asp:GridView>
                 </div>
             </div>
-
             <ajaxToolkit:ModalPopupExtender ID="EditPopup" runat="server"
                 TargetControlID="hfUserID"
                 PopupControlID="pnlAddPopup"
@@ -155,7 +189,7 @@
                 CancelControlID="imgClose"
                 PopupDragHandleControlID="popupheader">
             </ajaxToolkit:ModalPopupExtender>
-            <div class="panel1 panel1-primary" id="pnlAddPopup" style="background-color: white; align-self: center;">
+            <div class="panel1 panel1-primary" id="pnlAddPopup" runat="server" style="background-color: white; align-self: center;">
                 <div class="panel1-heading" id="popupheader">
                     <h3 class="panel1-title">Panel title</h3>
                     <span style="float: right; margin-top: -30px;">

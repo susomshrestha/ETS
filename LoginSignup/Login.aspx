@@ -36,7 +36,7 @@
                             <div class="info d-flex align-items-center">
                                 <div class="content">
                                     <div class="logo">
-                                        <h1>Expense Tracking System</h1>
+                                        <h1><a href="../Website/Home.aspx"><strong style="color:white;">Expense Tracking System</strong></a></h1>
                                     </div>
                                     <p><%--text--%></p>
                                 </div>
@@ -48,17 +48,19 @@
                                 <div class="content">
                                     <div class="form-validate">
                                         <div class="form-group">
+                                            <asp:RequiredFieldValidator ControlToValidate="txtUserName" ValidationGroup="a" ID="RequiredFieldValidator1" runat="server" ErrorMessage="*" ForeColor="Red"></asp:RequiredFieldValidator>
                                             <asp:TextBox ID="txtUserName" runat="server" CssClass="input-material"></asp:TextBox>
                                             <label for="login-username" class="label-material">User Name</label>
                                         </div>
                                         <div class="form-group">
+                                            <asp:RequiredFieldValidator ControlToValidate="txtPassword" ValidationGroup="a" ID="RequiredFieldValidator2" runat="server" ErrorMessage="*" ForeColor="Red"></asp:RequiredFieldValidator>
                                             <asp:TextBox ID="txtPassword" TextMode="Password" runat="server" CssClass="input-material"></asp:TextBox>
                                             <label for="login-password" class="label-material">Password</label>
                                         </div>
-                                        <asp:Button ID="btnLogin" runat="server" OnClick="btnLogin_Click" Text="Login" CssClass="btn btn-primary" />
+                                        <asp:Button ID="btnLogin" ValidationGroup="a" runat="server" OnClick="btnLogin_Click" Text="Login" CssClass="btn btn-primary" />
                                         <!-- This should be submit button but I replaced it with <a> for demo purposes-->
-                                    </div>
-                                    <a href="AccountRecovery.aspx" class="forgot-pass">Forgot Password?</a><br>
+                                    </div><br />
+                                    <a href="AccountRecovery.aspx" class="forgot-pass">Forgot Password?</a><br />
                                     <small>Do not have an account? </small>
                                     <a href="Signup.aspx" class="signup">Signup</a>
                                 </div>

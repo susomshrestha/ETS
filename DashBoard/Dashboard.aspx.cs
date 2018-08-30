@@ -15,12 +15,21 @@ public partial class DashBoard_Dashboard : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            if (Session["UserId"] != null)
+            {
+                userid = (int)Session["UserId"];
             showAmounts();
+            }
+            else
+            {
+                Response.Redirect("../LoginSignup/Login.aspx");
+            }
+            
         }
     }
     public void showAmounts()
     {
-        userid = (int)Session["UserId"];
+        
         DataTable di = bli.GetOnlyIncomes(userid);
         decimal incomeTotal = 0;
         for (int i = 0; i < di.Rows.Count; i++)

@@ -11,9 +11,19 @@ using System.Web.UI.WebControls;
 public partial class DashBoard_Statistics : System.Web.UI.Page
 {
     BLLExpense ble = new BLLExpense();
+    int userid;
     protected void Page_Load(object sender, EventArgs e)
     {
-        toJson();
+        if (Session["UserId"] != null)
+        {
+            userid = (int)Session["UserId"];
+            toJson();
+        }
+        else
+        {
+            Response.Redirect("../LoginSignup/Login.aspx");
+        }
+        
     }
     public void toJson()
     {

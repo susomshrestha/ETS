@@ -140,7 +140,10 @@
 }
 .col-button
 {
-    margin-left:100px;
+    margin-left:105px;
+}
+.col-sm-1{
+    margin-right:5px;
 }
 .form-control {
     display: block;
@@ -190,12 +193,12 @@
     opacity: 1;
 }
 
-.form-control::-ms-input-placeholder {
+.form-control:-ms-input-placeholder {
     color: #6c757d;
     opacity: 1;
 }
 
-.form-control::placeholder {
+.form-control:placeholder {
     color: #6c757d;
     opacity: 1;
 }

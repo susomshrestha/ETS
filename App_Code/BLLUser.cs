@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -78,10 +78,39 @@ public class BLLUser
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         da.Fill(dt);
         return dt;
-
-
     }
 
+    public DataTable getPasswordByUsername(String Username)
+    {
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["ETS"].ConnectionString);
+        String sql = "ets_getPasswordByUsername";
+        SqlCommand cmd = new SqlCommand(sql, con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@username", Username);
+
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        return dt;
+    }
+
+    public int UpdateProfile(String Email, String Fullname, String Address, String Phone)
+    {
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["ETS"].ConnectionString);
+        string sql = "ets_UpdateProfile";
+        SqlCommand cmd = new SqlCommand(sql, con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("Email", Email);
+        cmd.Parameters.AddWithValue("FullName", Fullname);
+        cmd.Parameters.AddWithValue("Address", Address);
+        cmd.Parameters.AddWithValue("Phone", Phone);
+
+        con.Open();
+        int i = cmd.ExecuteNonQuery();
+        con.Close();
+        return i;
+
+    }
 
 
     public DataTable getUserInformation(int Userid)

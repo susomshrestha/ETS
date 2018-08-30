@@ -33,10 +33,13 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <style>
-        .label1
-        {
-            font:bold 20px roboto;
-            color:white;
+        .label1 {
+            font: bold 20px roboto;
+            color: white;
+        }
+
+        .big {
+            font-size: 20px;
         }
     </style>
     <script>
@@ -79,7 +82,7 @@
                     <div class="container-fluid d-flex align-items-center justify-content-between">
                         <div class="navbar-header">
                             <!-- Navbar Header-->
-                            <a href="index.html" class="navbar-brand">
+                            <a href="Dashboard.aspx" class="navbar-brand">
                                 <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Dash</strong><strong>Board</strong></div>
                                 <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div>
                             </a>
@@ -117,9 +120,57 @@
                                     </a><a href="#" class="dropdown-item text-center message"><strong>See All Messages <i class="fa fa-angle-right"></i></strong></a>
                                 </div>
                             </div>--%>
+                            <!-- Tasks-->
+                            <div class="list-inline-item dropdown">
+                                <a id="navbarDropdownMenuLink2" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link tasks-toggle">
+                                    <i class="fa fa-bell"></i><span class="badge dashbg-3">
+                                        <asp:Label ID="lblNotificationCount" runat="server" Text=""></asp:Label>
+                                                              </span></a>
+                                <div aria-labelledby="navbarDropdownMenuLink2" class="dropdown-menu tasks-list">
+                                    <a href="#" class="dropdown-item">
+                                        <div style="height:50px;" >
+                                            <p id="notificationMessage" runat="server">
+
+                                            </p>
+                                        </div>
+                                        <%--<div class="text d-flex justify-content-between"><strong>Task 1</strong><span>40% complete</span></div>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                                        </div>--%>
+                                    </a>
+                                    <asp:Panel ID="PlaceHolder" runat="server"></asp:Panel>
+                                    <%--<asp:PlaceHolder ID="PlaceHolder" runat="server"></asp:PlaceHolder>--%>
+                                    <%--<a href="#" class="dropdown-item">
+                                        <div class="text d-flex justify-content-between"><strong>Task 2</strong><span>20% complete</span></div>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="text d-flex justify-content-between"><strong>Task 3</strong><span>70% complete</span></div>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="text d-flex justify-content-between"><strong>Task 4</strong><span>30% complete</span></div>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="text d-flex justify-content-between"><strong>Task 5</strong><span>65% complete</span></div>
+                                        <div class="progress">
+                                            <div role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item text-center"><strong>See All Tasks <i class="fa fa-angle-right"></i></strong></a>--%>
+                                </div>
+                            </div>
+                            <!-- Tasks end-->
                             <!-- Log out               -->
-                            <div class="list-inline-item logout">
-                                <asp:ImageButton ID="btnLogout" OnClick="btnLogout_Click" ImageUrl="../DashBoardStyle/img/Logout-512.png" runat="server" />
+                            <div class="list-inline-item logout text-xl-center">
+                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click"><strong class="big">Logout  <i class="fa fa-sign-out"></i></strong></asp:LinkButton>
                             </div>
                         </div>
                     </div>
@@ -129,7 +180,7 @@
                 <!-- Sidebar Navigation-->
                 <nav id="sidebar">
                     <div class="sidebar-header d-flex align-items-center">
-                        <div class="avatar">                            
+                        <div class="avatar">
                             <asp:Image ID="imgProfile" ImageUrl="../DashBoardStyle/img/profile.png" CssClass="img-fluid rounded-circle" runat="server" />
                         </div>
                         <div class="title">
@@ -157,6 +208,7 @@
                         <li><a href="Report.aspx"><i class="icon-padnote"></i>Report </a></li>
                         <li><a href="Statistics.aspx"><i class="fa fa-bar-chart"></i>Statistics </a></li>
                         <li><a href="Analysis.aspx"><i class="fa fa-book"></i>Analysis </a></li>
+                        <li><a href="Profile.aspx"><i class="fa fa-user-circle"></i>Profile </a></li>
                     </ul>
                     <%--<span class="heading">Extras</span>
                     <ul class="list-unstyled">
@@ -187,6 +239,7 @@
     <script src="../DashBoardStyle/vendor/jquery.cookie/jquery.cookie.js"></script>
     <script src="../DashBoardStyle/vendor/chart.js/Chart.min.js"></script>
     <script src="../DashBoardStyle/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../DashBoardStyle/js/charts-custom.js"></script>
     <script src="../DashBoardStyle/js/front.js"></script>
 </body>
 </html>

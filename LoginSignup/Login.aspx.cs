@@ -28,6 +28,7 @@ public partial class LoginSignup_Signin : System.Web.UI.Page
             if (Convert.ToString(dt.Rows[0]["Status"]) == "Enable")
             {
                 Session["UserId"] = Convert.ToInt32(dt.Rows[0]["UserId"]);
+                Session["UserName"] = (dt.Rows[0]["UserName"]).ToString();
                 Response.Redirect("../DashBoard/Dashboard.aspx");
             }
             else

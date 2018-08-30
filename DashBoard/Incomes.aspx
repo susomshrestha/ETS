@@ -9,7 +9,7 @@
         <ContentTemplate>
             <div>
                 <p style="margin: 10px 15px;">
-                    <a href="Dashboard.aspx">Dashboard </a> / Income / Add Incomes
+                    <a href="Dashboard.aspx">Dashboard </a>/ Income / Add Incomes
                 </p>
             </div>
             <div class="col-lg-12">
@@ -59,8 +59,14 @@
                                         <asp:Label runat="server" onkeypress="return onlyDate(event)" MaxLength="10" CssClass="form-control-label" Text="Date"></asp:Label>
                                     </div>
                                     <div class="col-3">
-                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtDate"></asp:TextBox>
-                                        <ajaxToolkit:CalendarExtender ID="txtDate_CalendarExtender" runat="server" TargetControlID="txtDate" />
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtDate"></asp:TextBox>
+                                                <ajaxToolkit:CalendarExtender ID="txtDate_CalendarExtender" runat="server" TargetControlID="txtDate" />
+                                                <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -144,7 +150,7 @@
                 CancelControlID="imgClose"
                 PopupDragHandleControlID="popupheader">
             </ajaxToolkit:ModalPopupExtender>
-            <div class="panel1 panel1-primary" id="pnlAddPopup" style="background-color: white; align-self: center;">
+            <div class="panel1 panel1-primary" id="pnlAddPopup" style="background-color: white; align-self: center;" runat="server">
                 <div class="panel1-heading" id="popupheader">
                     <h3 class="panel1-title">Panel title</h3>
                     <span style="float: right; margin-top: -30px;">
@@ -198,7 +204,7 @@
                     </div>
                 </div>
             </div>
-        </ContentTemplate>        
+        </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
 

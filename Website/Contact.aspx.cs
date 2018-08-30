@@ -11,4 +11,10 @@ public partial class Website_Contact : System.Web.UI.Page
     {
 
     }
+
+
+    protected void btnSend_Click(object sender, EventArgs e)
+    {
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Message Received');", true);
+    }
 }

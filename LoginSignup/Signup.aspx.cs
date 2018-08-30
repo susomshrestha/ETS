@@ -33,7 +33,7 @@ public partial class LoginSignup_Signup1 : System.Web.UI.Page
             if (dt1.Rows.Count > 0)
             {
 
-                
+
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Username already exists')", true);
                 txtUserName.Text = "";
                 txtPassword.Text = "";
@@ -41,37 +41,22 @@ public partial class LoginSignup_Signup1 : System.Web.UI.Page
             }
             else
             {
-                if (txtPassword.Text == txtConfirmPassword.Text)
+                String password = user.Encrypt(txtPassword.Text);
+                String createdAt = DateTime.Now.ToString("yyyy-MM-dd");
+                String activationcode = Guid.NewGuid().ToString();
+                int id = user.addUserInfo(txtFirstName.Text + " " + txtLastName.Text, txtUserName.Text, password, txtPhone.Text, txtEmail.Text, txtAddress.Text, Convert.ToDateTime(createdAt), activationcode);
+                if (id > 0)
                 {
-                    String password = user.Encrypt(txtPassword.Text);
-                    String createdAt = DateTime.Now.ToString("yyyy-MM-dd");
-                    String activationcode = Guid.NewGuid().ToString();
-                    int id = user.addUserInfo(txtFirstName.Text + " " + txtLastName.Text, txtUserName.Text, password, txtPhone.Text, txtEmail.Text, txtAddress.Text, Convert.ToDateTime(createdAt), activationcode);
-                    if (id > 0)
-                    {
-                        sendActivationCode(activationcode);
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Registration successful. Activation email has been sent.');window.location ='Login.aspx';", true);
-                       
-
-                    }
-
-                }
-                else
-                {
-                   
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Password does not match. Re enter.');", true);
-                    txtPassword.Text = "";
-                    txtConfirmPassword.Text = "";
-
-                }
-
+                    sendActivationCode(activationcode);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Registration successful. Activation email has been sent.');window.location ='Login.aspx';", true);                    
+                }               
             }
         }
 
     }
     public void sendActivationCode(String activationcode)
     {
-        
+
         using (MailMessage mm = new MailMessage("expensetrackingproject@gmail.com", txtEmail.Text))
         {
             mm.Subject = "Account Activation";
@@ -90,6 +75,6 @@ public partial class LoginSignup_Signup1 : System.Web.UI.Page
             smtp.Port = 587;
             smtp.Send(mm);
         }
-        
+
     }
 }

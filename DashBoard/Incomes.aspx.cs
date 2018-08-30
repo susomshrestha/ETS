@@ -15,17 +15,26 @@ public partial class DashBoard_Incomes : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            userid = (int)Session["UserId"];
-            showDDL();
-            txtDate.Text = DateTime.Today.ToShortDateString();
-            if (bli.GetAllIncome(userid) == null)
+            pnlAddPopup.Visible = false;
+            if (Session["UserId"] != null)
             {
-                lblMessage.Text = "No Data Found";
+                userid = (int)Session["UserId"];
+                showDDL();
+                txtDate.Text = DateTime.Today.ToShortDateString();
+                if (bli.GetAllIncome(userid) == null)
+                {
+                    lblMessage.Text = "No Data Found";
+                }
+                else
+                {
+                    showIncomes();
+                }
             }
             else
             {
-                showIncomes();
+                Response.Redirect("../LoginSignup/Login.aspx");
             }
+
         }
     }
     public void showDDL()
@@ -113,6 +122,7 @@ public partial class DashBoard_Incomes : System.Web.UI.Page
         txteditDate.Text = Convert.ToDateTime(dtbl.Rows[0]["incomeDate"]).ToShortDateString();
         txteditDescription.Text = dtbl.Rows[0]["incomeDescription"].ToString();
 
+        pnlAddPopup.Visible = true;
         EditPopup.Show();
     }
 

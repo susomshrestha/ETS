@@ -31,6 +31,38 @@ public class BLLExpense
         adapter.Fill(dt);
         return dt;
     }
+    public DataTable getAllSortedExpense(int id, string method)
+    {
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["ETS"].ConnectionString);
+        string sql = "Expense_sort";
+        SqlCommand cmd = new SqlCommand(sql, con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@uid", id);
+        cmd.Parameters.AddWithValue("@method", method);
+
+        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+        DataTable dt = new DataTable();
+
+        adapter.Fill(dt);
+        return dt;
+    }
+    public DataTable getAllSortedReport(int id, string method,DateTime from,DateTime to)
+    {
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["ETS"].ConnectionString);
+        string sql = "Report_sort";
+        SqlCommand cmd = new SqlCommand(sql, con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@uid", id);
+        cmd.Parameters.AddWithValue("@method", method);
+        cmd.Parameters.AddWithValue("@from", from);
+        cmd.Parameters.AddWithValue("@to", to);
+
+        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+        DataTable dt = new DataTable();
+
+        adapter.Fill(dt);
+        return dt;
+    }
     public int InsertExpense(int iid, int status, string name, decimal amount, DateTime date, string desc, int id)
     {
         SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["ETS"].ConnectionString);
@@ -117,7 +149,7 @@ public class BLLExpense
         return dt;
     }
     
-    public DataTable getExpenseByDateRange(int id, DateTime from, DateTime to,DateTime now)
+    public DataTable getExpenseByDateRange(int id, DateTime from, DateTime to)
     {
         SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["ETS"].ConnectionString);
         string sql = "getExpenseByDateRange";
@@ -126,8 +158,7 @@ public class BLLExpense
         cmd.Parameters.AddWithValue("@uid", id);
         cmd.Parameters.AddWithValue("@from", from);
         cmd.Parameters.AddWithValue("@to", to);
-        cmd.Parameters.AddWithValue("@now", now);
-
+        
         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
         DataTable dt = new DataTable();
 
